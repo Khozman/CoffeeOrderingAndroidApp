@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.NumberFormat;
-
 /**
  * This app displays an order form to order coffee.
  */
 public class MainActivity extends AppCompatActivity {
+
+    int quantity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,28 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        int quantity = 5;
         display(quantity);
         displayPrice(quantity * 5);
+    }
+
+    /**
+     * This method is called when the + button is clicked.
+     */
+    public void increment(View view){
+        quantity = quantity + 1;
+        display(quantity);
+    }
+
+    /**
+     * This method is called when the - button is clicked.
+     */
+    public void decrement(View view){
+        if (quantity > 0){
+            quantity = quantity - 1;
+        } else {
+            quantity = 0;
+        }
+        display(quantity);
     }
 
     /**
@@ -50,6 +69,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void displayPrice(int number) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+        priceTextView.setText("R " + number);
     }
 }
