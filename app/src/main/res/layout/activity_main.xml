@@ -13,11 +13,20 @@
         tools:context=".MainActivity"
         android:orientation="vertical">
 
+
+        <EditText
+            android:id="@+id/name_text_input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="textCapWords"
+            android:hint="Please enter your name:"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Topping"
             android:textAllCaps="true"
+            android:paddingTop="16dp"
             android:paddingBottom="16dp"/>
 
         <CheckBox
@@ -101,12 +110,6 @@
             android:text="Order"
             android:layout_marginTop="16dp"
             android:onClick="submitOrder"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="fqefewfqefqefqefeqfqefeqfqwfqwf"
-            android:textSize="123dp"/>
 
     </LinearLayout>
 </ScrollView>

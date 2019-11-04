@@ -12,6 +12,7 @@ package com.example.android.justjava;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate){
-        String name = "Bheki-nkosi Khosa";
+    private String createOrderSummary(String name, int price, boolean addWhippedCream, boolean addChocolate){
+
         return ("Name: " + name +
                 " \nAdd Whipped cream? " + addWhippedCream +
                 " \nAdd Chocolate? " + addChocolate +
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        EditText name = (EditText) findViewById(R.id.name_text_input);
+        String setName = name.getText().toString();
+
         // Figure out if the user wants whipped cream topping
         CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
         boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
@@ -53,22 +57,37 @@ public class MainActivity extends AppCompatActivity {
         boolean hasChocolate = chocolateCheckBox.isChecked();
 
         // Calculate the price
-        int price = calculatePrice();
+        int price = calculatePrice(hasChocolate, hasWhippedCream);
 
         // Display the order summary on the screen
-        String message = createOrderSummary(price, hasWhippedCream, hasChocolate);
+        String message = createOrderSummary(setName, price, hasWhippedCream, hasChocolate);
         displayMessage(message);
     }
 
-    private int calculatePrice() {
-        return quantity * 5;
+    private int calculatePrice(boolean hasChocolate, boolean hasWhippedCream) {
+
+        int pricePerCup = 5;
+
+        if(hasChocolate){
+            pricePerCup = pricePerCup + 2;
+        }
+
+        if(hasWhippedCream){
+            pricePerCup = pricePerCup + 1;
+        }
+
+        return pricePerCup * quantity;
     }
 
     /**
      * This method is called when the + button is clicked.
      */
     public void increment(View view){
-        quantity = quantity + 1;
+        if (quantity < 100) {
+            quantity = quantity + 1;
+        } else {
+            quantity = 100;
+        }
         display(quantity);
     }
 
