@@ -11,6 +11,7 @@ package com.example.android.justjava;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     int quantity = 0;
+//    boolean whippedCream = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +30,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    private String createOrderSummary(){
+    private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate){
         String name = "Bheki-nkosi Khosa";
-        return ("Name: " + name + "\nQuantity: " + quantity + "\nTotal: R " + quantity * 5 + "\nThank you!");
+        return ("Name: " + name +
+                " \nAdd Whipped cream? " + addWhippedCream +
+                " \nAdd Chocolate? " + addChocolate +
+                "\nQuantity: " + quantity +
+                "\nTotal: R " + price +
+                "\nThank you!");
     }
 
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        // Figure out if the user wants whipped cream topping
+        CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
+        boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
 
-        displayMessage(createOrderSummary());
+        // Figure out if the user wants chocolate topping
+        CheckBox chocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        boolean hasChocolate = chocolateCheckBox.isChecked();
+
+        // Calculate the price
+        int price = calculatePrice();
+
+        // Display the order summary on the screen
+        String message = createOrderSummary(price, hasWhippedCream, hasChocolate);
+        displayMessage(message);
+    }
+
+    private int calculatePrice() {
+        return quantity * 5;
     }
 
     /**
@@ -77,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
         TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
         orderSummaryTextView.setText(message);
     }
+
 }
