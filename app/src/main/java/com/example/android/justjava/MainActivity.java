@@ -9,6 +9,8 @@
 package com.example.android.justjava;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -61,7 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Display the order summary on the screen
         String message = createOrderSummary(setName, price, hasWhippedCream, hasChocolate);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Just Java Coffee Order for " + setName);
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
+
         displayMessage(message);
+
     }
 
     private int calculatePrice(boolean hasChocolate, boolean hasWhippedCream) {
